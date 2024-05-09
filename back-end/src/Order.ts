@@ -88,7 +88,11 @@ export class Order extends BaseEntity {
     };
   }
 
-  async deleteOrder() {
-    await Order.delete({ id: this.id });
+  static async deleteOrder(id: string) {
+    const order : Order | null = await Order.findOne({ where: { id: id } })
+    if(order) {
+      await order.remove();
+    }
   }
+
 }

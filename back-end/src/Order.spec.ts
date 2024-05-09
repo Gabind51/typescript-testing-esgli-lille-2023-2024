@@ -156,3 +156,20 @@ describe("getOrderCost", () => {
     });
   });
 });
+
+describe("deleteOrder", () => {
+  it("removes the order from the database", async () => {
+    const articles = await Article.find();
+    const order = await Order.createOrder([
+      { articleId: articles[0].id, quantity: 2 },
+      { articleId: articles[1].id, quantity: 3 },
+    ]);
+
+    await order.remove()
+
+    expect(order.getOrderCost()).toEqual({});
+  });
+});
+
+
+
